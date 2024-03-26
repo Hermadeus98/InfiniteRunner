@@ -6,16 +6,32 @@ public class Character : MonoBehaviour
     [SerializeField] private Transform _transform = null;
 
     [Header("Balancing")]
-    [SerializeField] private float _speed = 0.0f;
+    [SerializeField] private float _initialSpeed = 0.0f;
     [SerializeField] private float _lateralMovement = 0.0f;
     [SerializeField] private float _maxRightPosition = 0.0f;
     [SerializeField] private float _maxLeftPosition = 0.0f;
+    [SerializeField] private AnimationCurve _accelerationCurve = null;
+    [SerializeField] private float _accelationTime = 10f;
+    [SerializeField] private float _accelerationRatio = 5f;
 
     private float _currentPositionX = 0.0f;
+    private float _accelerationElapsedTime = 0.0f;
+    private float _speed = 0.0f;
 
     private void Update()
     {
+        _speed = _initialSpeed;
+
+        UpdateSpeed();
         MoveForward();
+    }
+
+    private void UpdateSpeed()
+    {
+        _accelerationElapsedTime += Time.deltaTime;
+        float lerp = _accelerationCurve.Evaluate(_accelerationElapsedTime / _accelationTime);
+        lerp *= _accelerationRatio;
+        _speed = _initialSpeed * (1 + lerp);
     }
 
     private void MoveForward()

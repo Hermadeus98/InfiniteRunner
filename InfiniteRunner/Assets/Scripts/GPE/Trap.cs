@@ -5,6 +5,8 @@ using UnityEngine;
 public class Trap : MonoBehaviour
 {
     [SerializeField] private int _damage = 0;
+    [SerializeField] private ParticleSystem _explosion = null;
+    [SerializeField] private float _screenShakeDuration = .5f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,5 +24,18 @@ public class Trap : MonoBehaviour
         }
 
         healthTrigger.MakeDamage(_damage);
+
+        PlayExplosionFx();
+        PlayScreenShake();
+    }
+
+    private void PlayExplosionFx()
+    {
+        _explosion.Play();
+    }
+
+    private void PlayScreenShake()
+    {
+        FeedbackManager.Instance.PlayScreenShake(_screenShakeDuration);
     }
 }

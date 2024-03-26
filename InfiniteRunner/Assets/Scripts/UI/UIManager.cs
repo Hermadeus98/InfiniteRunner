@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private HealthText _healthText = null;
+    [SerializeField] private PointText _pointText = null;
+    [SerializeField] private CanvasGroup _loseCanvasGround = null;
 
     /// <summary>
     /// Awake() est appelé au lancement d'une scene : avant le Start();
@@ -36,5 +38,15 @@ public class UIManager : MonoBehaviour
         // Attention avec cette écriture car aucune erreur n'est visible !
 
         _healthText?.SetHealthText(currentHealth, maxHealth);
+    }
+
+    public void SetPointText(int points)
+    {
+        _pointText?.SetPointText(points);
+    }
+
+    public void ShowLoseView()
+    {
+        _loseCanvasGround.alpha = 1f;
     }
 }

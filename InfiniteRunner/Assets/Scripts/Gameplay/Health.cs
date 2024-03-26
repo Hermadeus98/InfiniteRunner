@@ -27,6 +27,7 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
+        UIManager.Instance.ShowLoseView();
         Destroy(gameObject);
     }
 
